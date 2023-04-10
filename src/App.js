@@ -1,30 +1,31 @@
 import './App.css';
-import Footer from './Footer.js';
-import FanInformation from './FanInfomation';
+import {useReducer, useRef, useState } from 'react';
 
 function App() {
-  // call the weather API
-  // display the weather on the page in both App and Footer
-  const fakeApiData = 'sunny';
-  const weatherData= 'weather';
-  // pretend response from an API with sports team names
-  const sportsTeam = ['Blue Jays', 'Raptors', 'Maple Leafs']
-  const followTeam = (team)=>{
-    console.log(`You are following the ${team}!`);
+  const [title, setTitle]= useState('')
+  const [color, setColor] = useState('#000000');
+  const submit = (e)=>{
+    e.preventDefault();
+    alert(`${title}, ${color}`);
+    setTitle('');
+    setColor('#000000');
   }
   return (
-    <div className="App">
-      {/* <FanInformation/> */}
-      {sportsTeam.map((name ,index)=> {
-        return <FanInformation teamName={name} followTeam={()=>{
-          followTeam(name)
-        }} key={index}/>;
-      })}
-  
-      {/* <p>{fakeApiData}</p> */}
-      {/* passing props into Footer.js */}
-      <Footer fakeApiData={fakeApiData} weatherData={weatherData} />
-    </div>
+    <form onSubmit={submit}>
+      <input
+      value={title}
+        onChange={(event) => {
+          setTitle(event.target.value);
+        }}
+        type="text"
+        placeholder="color, title..."
+      />
+
+      <input 
+      value={color}
+      onChange={(event) => setColor(event.target.value)} type="color" />
+      <button>ADD</button>
+    </form>
   );
 }
 
